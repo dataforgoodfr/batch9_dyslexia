@@ -38,6 +38,9 @@ def eval_folder(ground_truth_path: Path, prediction_path: Path) -> Dict[str, flo
 
     aggragate_scores = {}
 
+    for res, t, h in zip(results, truth_txt_paths, hypothesis_txt_paths):
+        print(t, h, res)
+
     if results:
         for key in results[0]:
             aggragate_scores[key] = float(np.mean([d[key] for d in results]))
