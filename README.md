@@ -34,10 +34,13 @@ from dyslexia.ocr import extract_text_from_image
 
 fpath = 'Exemples/SVT/IMG_20210329_123029.jpg'
 image_orig = load_image(fpath)
+image_no_shadow = preprocessing.remove_shadow(image_orig)
 image_gray = preprocessing.image_to_gray(image_no_shadow, threshold=True)
 
 result = extract_text_from_image(image_gray)
 ```
+
+=======
 
 ### Eval Scripts
 
