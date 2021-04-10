@@ -3,18 +3,6 @@ import cv2
 import numpy as np
 
 
-def fix_orientation(orientation):
-    if orientation < 45:
-        return 0
-    elif orientation < 135:
-        return 90
-    elif orientation < 225:
-        return 180
-    elif orientation < 315:
-        return 270
-    return 0
-
-
 def crop_black_border(img):
 
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -38,12 +26,20 @@ def load_image(fpath: str):
     for orientation in ExifTags.TAGS.keys():
         if ExifTags.TAGS[orientation] == 'Orientation':
             break
-    # Fix rotation so that it should be 0, 90, 180 or 270
-    orientation = fix_orientation(orientation)
 
     exif = image._getexif()
-    # Rotate image
-    image = image.rotate(orientation)
+    
+    # The orientation of the camera relative to the scene, when the image was captured.
+    # 3 = Rotate 180 CW
+    # 6 = Rotate 90 CW (or 270 ACW)
+    # 8 = Rotate 270 CW (or 90 ACW)
+    # OpenCV rotate images by default using Anti-Clockwise direction
+    if exif[orientation] == 3:
+        image=image.transpose(Image.ROTATE_180)
+    elif exif[orientation] == 6:
+        image=image.transpose(Image.ROTATE_270)
+    elif exif[orientation] == 8:
+        image=image.transpose(Image.ROTATE_90)
 
     # Convert as np.array so that it's usable with cv2
     image = np.array(image)
