@@ -19,7 +19,7 @@ def crop_black_border(img):
     return crop
 
 
-def load_image(fpath: str):
+def load_image(fpath: str, crop_border: bool = True):
     image = Image.open(fpath)
 
     # Find rotation from source
@@ -28,24 +28,27 @@ def load_image(fpath: str):
             break
 
     exif = image._getexif()
-    
+
     # The orientation of the camera relative to the scene, when the image was captured.
     # 3 = Rotate 180 CW
     # 6 = Rotate 90 CW (or 270 ACW)
     # 8 = Rotate 270 CW (or 90 ACW)
     # OpenCV rotate images by default using Anti-Clockwise direction
-    if exif[orientation] == 3:
-        image=image.transpose(Image.ROTATE_180)
-    elif exif[orientation] == 6:
-        image=image.transpose(Image.ROTATE_270)
-    elif exif[orientation] == 8:
-        image=image.transpose(Image.ROTATE_90)
+
+    if exif is not None:
+
+        if exif[orientation] == 3:
+            image = image.transpose(Image.ROTATE_180)
+        elif exif[orientation] == 6:
+            image = image.transpose(Image.ROTATE_270)
+        elif exif[orientation] == 8:
+            image = image.transpose(Image.ROTATE_90)
 
     # Convert as np.array so that it's usable with cv2
     image = np.array(image)
 
     # Remove black border after rotation
-    if orientation > 0:
+    if orientation > 0 and crop_border:
         image = crop_black_border(image)
 
     return image
