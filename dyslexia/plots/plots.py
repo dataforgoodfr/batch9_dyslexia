@@ -55,3 +55,23 @@ def plot_2_images(img1: np.ndarray, img2: np.ndarray, figsize=(18, 9), gray=(Fal
         ax.imshow(img2)
 
     plt.show()
+
+def plot_n_images(images, figsize=(18, 9)):
+    """Plots original image and the processed one
+
+    Parameters
+    ----------
+    images : list(np.ndarray)
+        list of images to show
+    figsize : tuple, default (18, 9)
+        Figure size
+    """
+    fig, axes = plt.subplots(1, len(images), figsize=figsize)
+
+    for idx, ax in enumerate(axes):
+        if len(images[idx].shape) == 3:
+            ax.imshow(images[idx])
+        else:
+            ax.imshow(images[idx], cmap='gray')
+
+    plt.show()
