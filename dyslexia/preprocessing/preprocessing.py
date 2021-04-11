@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+import imutils
 
 
 def rgb2gray(rgb: np.ndarray):
@@ -34,17 +35,18 @@ def rotate_img(image: np.ndarray, angle: float):
     np.ndarray
         Rotated image
     """
+    return imutils.rotate_bound(image, angle)
 
-    image_center = tuple(np.array(image.shape[1::-1]) / 2)
+    # image_center = tuple(np.array(image.shape[1::-1]) / 2)
 
-    rot_mat = cv2.getRotationMatrix2D(image_center, angle, 1.0)
+    # rot_mat = cv2.getRotationMatrix2D(image_center, angle, 1.0)
 
-    result = cv2.warpAffine(image,
-                            rot_mat,
-                            image.shape[1::-1],
-                            flags=cv2.INTER_LINEAR)
+    # result = cv2.warpAffine(image,
+    #                         rot_mat,
+    #                         image.shape[1::-1],
+    #                         flags=cv2.INTER_LINEAR)
 
-    return result
+    # return result
 
 
 def image_to_gray(image: np.ndarray, threshold=False):
