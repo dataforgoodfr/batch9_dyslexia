@@ -66,8 +66,10 @@ def image_to_gray(image: np.ndarray, threshold=False):
     # convert the image to grayscale and flip the foreground
     # and background to ensure foreground is now "white" and
     # the background is "black"
-    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    gray = cv2.bitwise_not(gray)
+    if len(image.shape) == 3:
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+    gray = cv2.bitwise_not(image)
 
     # threshold the image, setting all foreground pixels to
     # 255 and all background pixels to 0
@@ -143,7 +145,7 @@ def remove_shadow(img: np.ndarray):
     result_norm_planes = []
 
     for plane in rgb_planes:
-        dilated_img = cv2.dilate(plane, np.ones((7, 7), np.uint8))
+        dilated_img = cv2.dilate(plane, np.ones((9,9), np.uint8))
         bg_img = cv2.medianBlur(dilated_img, 21)
 
         diff_img = 255 - cv2.absdiff(plane, bg_img)
