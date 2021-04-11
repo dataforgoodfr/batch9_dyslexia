@@ -4,9 +4,12 @@ import numpy as np
 
 
 def crop_black_border(img):
+    tmp = img.copy()
+    
+    if len(img.shape) == 3:
+        tmp = cv2.cvtColor(tmp, cv2.COLOR_BGR2GRAY)
 
-    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    _, thresh = cv2.threshold(gray, 1, 255, cv2.THRESH_BINARY)
+    _, thresh = cv2.threshold(tmp, 1, 255, cv2.THRESH_BINARY)
 
     contours, hierarchy = cv2.findContours(thresh, cv2.RETR_EXTERNAL,
                                            cv2.CHAIN_APPROX_SIMPLE)
@@ -19,7 +22,7 @@ def crop_black_border(img):
     return crop
 
 
-def load_image(fpath: str, crop_border: bool = True):
+def load_image(fpath: str):
     image = Image.open(fpath)
 
     # Find rotation from source
@@ -35,20 +38,23 @@ def load_image(fpath: str, crop_border: bool = True):
     # 8 = Rotate 270 CW (or 90 ACW)
     # OpenCV rotate images by default using Anti-Clockwise direction
 
+    crop_border = False
     if exif is not None:
 
         if exif[orientation] == 3:
             image = image.transpose(Image.ROTATE_180)
         elif exif[orientation] == 6:
             image = image.transpose(Image.ROTATE_270)
+            crop_border = True
         elif exif[orientation] == 8:
             image = image.transpose(Image.ROTATE_90)
+            crop_border = True
 
     # Convert as np.array so that it's usable with cv2
     image = np.array(image)
 
-    # Remove black border after rotation
-    if orientation > 0 and crop_border:
+    # Only crop if rotate 270 or 90
+    if crop_border:
         image = crop_black_border(image)
 
     return image
