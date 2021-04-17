@@ -46,6 +46,12 @@ def compute_rotation_angle(image):
                             threshold=100,
                             minLineLength=100,
                             maxLineGap=50)
+                            
+    if lines is None:
+        return 0
+    if len(lines) == 0:
+        return 0
+
     lines = np.reshape(lines, (lines.shape[0], 4))
 
     angles = []
