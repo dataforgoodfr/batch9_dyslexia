@@ -63,6 +63,15 @@ Takes as input an image and outputs the ocr results in the form
 
 {"text" : "...."}
 
+Example query : 
+
+```bash
+curl -X 'POST' \
+  'http://127.0.0.1:8000/ocr_url/?url=https%3A%2F%2Fdata2.unhcr.org%2Fimages%2Fdocuments%2Fbig_4cda85d892a5c0b5dd63b510a9c83e9c9d06e739.jpg' \
+  -H 'accept: application/json' \
+  -d ''
+```
+
 ### Eval Scripts
 
 ```bash
