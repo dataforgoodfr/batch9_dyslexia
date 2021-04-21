@@ -51,13 +51,13 @@ uvicorn app:app --reload
 Access swagger : http://127.0.0.1:8000/docs#/
 #### Endpoint
 
-#####/ocr_file/
+##### /ocr_file/
 
 Takes as input a file object and outputs the ocr results in the form
 
 {"text" : "...."}
 
-#####/orc_url/
+##### /orc_url/
 
 Takes as input an image and outputs the ocr results in the form
 
