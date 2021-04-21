@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+import imutils
 
 
 def rgb2gray(rgb: np.ndarray):
@@ -34,17 +35,18 @@ def rotate_img(image: np.ndarray, angle: float):
     np.ndarray
         Rotated image
     """
+    return imutils.rotate_bound(image, angle)
 
-    image_center = tuple(np.array(image.shape[1::-1]) / 2)
+    # image_center = tuple(np.array(image.shape[1::-1]) / 2)
 
-    rot_mat = cv2.getRotationMatrix2D(image_center, angle, 1.0)
+    # rot_mat = cv2.getRotationMatrix2D(image_center, angle, 1.0)
 
-    result = cv2.warpAffine(image,
-                            rot_mat,
-                            image.shape[1::-1],
-                            flags=cv2.INTER_LINEAR)
+    # result = cv2.warpAffine(image,
+    #                         rot_mat,
+    #                         image.shape[1::-1],
+    #                         flags=cv2.INTER_LINEAR)
 
-    return result
+    # return result
 
 
 def image_to_gray(image: np.ndarray, threshold=False):
@@ -66,8 +68,10 @@ def image_to_gray(image: np.ndarray, threshold=False):
     # convert the image to grayscale and flip the foreground
     # and background to ensure foreground is now "white" and
     # the background is "black"
-    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    gray = cv2.bitwise_not(gray)
+    if len(image.shape) == 3:
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+    gray = cv2.bitwise_not(image)
 
     # threshold the image, setting all foreground pixels to
     # 255 and all background pixels to 0
@@ -143,7 +147,7 @@ def remove_shadow(img: np.ndarray):
     result_norm_planes = []
 
     for plane in rgb_planes:
-        dilated_img = cv2.dilate(plane, np.ones((7, 7), np.uint8))
+        dilated_img = cv2.dilate(plane, np.ones((9,9), np.uint8))
         bg_img = cv2.medianBlur(dilated_img, 21)
 
         diff_img = 255 - cv2.absdiff(plane, bg_img)
