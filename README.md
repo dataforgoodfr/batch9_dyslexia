@@ -42,6 +42,43 @@ result = extract_text_from_image(image_gray)
 
 =======
 
+### App
+
+#### Run app
+```bash
+uvicorn app:app --reload
+```
+Access swagger : http://127.0.0.1:8000/docs#/
+#### Endpoint
+
+##### /ocr_file/
+
+Takes as input a file object and outputs the ocr results in the form
+
+{"text" : "...."}
+
+##### /orc_url/
+
+Takes as input an image and outputs the ocr results in the form
+
+{"text" : "...."}
+
+Example query : 
+
+```bash
+curl -X 'POST' \
+  'http://127.0.0.1:8000/ocr_url/?url=https%3A%2F%2Fdata2.unhcr.org%2Fimages%2Fdocuments%2Fbig_4cda85d892a5c0b5dd63b510a9c83e9c9d06e739.jpg' \
+  -H 'accept: application/json' \
+  -d ''
+```
+
+### Docker
+```
+sudo docker build -t dyslexia .
+
+sudo docker run -p 8080:8080 dyslexia
+```
+
 ### Eval Scripts
 
 ```bash

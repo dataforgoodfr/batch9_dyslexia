@@ -1,7 +1,11 @@
-matplotlib>=3.4.1
-numpy>=1.20.2
+matplotlib
+numpy
 opencv-python>=4.5.1.48
 pytesseract>=0.3.7
 click==7.1.2
 jiwer==2.2.0
 imutils>=0.5.4
+fastapi==0.63.0
+uvicorn==0.13.4
+python-multipart==0.0.5
+requests

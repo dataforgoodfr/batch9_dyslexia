@@ -7,16 +7,14 @@ from PIL import Image
 import numpy as np
 
 in_path = pathlib.Path("../data/images/")
-image_paths = in_path.glob("*.jpeg")
+image_paths = in_path.glob("Sample_0.jpeg")
 
 out_path = pathlib.Path("../data/hypothesis_preprocessing/")
 out_path.mkdir(exist_ok=True)
 
 for image_path in image_paths:
-    print(image_path)
 
-    image_orig = Image.open(image_path)
-    image_orig = np.array(image_orig)
+    image_orig = load_image(image_path)
 
     image_no_shadow = preprocessing.remove_shadow(image_orig)
     image_gray = preprocessing.image_to_gray(image_no_shadow, threshold=True)

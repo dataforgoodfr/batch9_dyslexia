@@ -1,3 +1,5 @@
+from typing import Union, IO
+from pathlib import Path
 from PIL import Image, ExifTags
 import cv2
 import numpy as np
@@ -22,7 +24,7 @@ def crop_black_border(img):
     return crop
 
 
-def load_image(fpath: str):
+def load_image(fpath: Union[str, IO, Path]):
     image = Image.open(fpath)
 
     # Find rotation from source
