@@ -72,6 +72,13 @@ curl -X 'POST' \
   -d ''
 ```
 
+### Docker
+```
+sudo docker build -t dyslexia .
+
+sudo docker run -p 8080:8080 dyslexia
+```
+
 ### Eval Scripts
 
 ```bash
