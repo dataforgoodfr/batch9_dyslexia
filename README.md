@@ -5,6 +5,45 @@
 
 ### Install 
 
+You first need to install `tesseract`
+
+#### On Mac
+
+```bash
+brew install tesseract
+```
+
+This will install `tesseract` supporting English. If you want to add other languages (French for instance), you can add:
+
+```bash
+brew install tesseract-lang
+```
+
+#### On Windows
+
+1. Download Binary from https://github.com/UB-Mannheim/tesseract/wiki 
+2. Run the executable file to install. It should install it to `C:\Program Files (x86)\Tesseract-OCR`
+3. Make sure your `TESSDATA_PREFIX` environment variable is set correctly
+* Go to Control Panel -> System -> Advanced System Settings -> Advanced tab -> Environment Variables... button
+* In System variables window scroll down to `TESSDATA_PREFIX`. If it's not right, select and click Edit...
+
+
+#### On Linux
+
+```bash
+sudo apt-get update
+sudo apt-get install tesseract-ocr
+sudo apt-get install libtesseract-dev
+```
+#### Then you should install python package:
+
+```bash
+pip install tesseract
+pip install tesseract-ocr
+```
+
+#### You can now install Dyslexia packages
+
 You can install this package by cloning the repository and using this command :
 
 ```bash
