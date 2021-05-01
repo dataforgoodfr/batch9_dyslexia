@@ -26,6 +26,4 @@ RUN python3 -m pip install . --no-cache-dir
 ENV LC_ALL=C.UTF-8
 ENV LANG=C.UTF-8
 
-EXPOSE 8080
-
-ENTRYPOINT python3 -m uvicorn app:app --host 0.0.0.0 --port 8080 --workers 1
+CMD python3 -m uvicorn app:app --host 0.0.0.0 --port $PORT --workers 1
