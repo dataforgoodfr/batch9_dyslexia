@@ -29,17 +29,21 @@ def text_from_array(image_orig):
 
 
 @app.post("/ocr_file/")
-def ocr(file: UploadFile = File(...)):
+def ocr_file(file: UploadFile = File(...)):
     image_orig = load_image(file.file)
     text = text_from_array(image_orig)
     return {"text": text}
 
 
 @app.post("/ocr_url/")
-def ocr(url: str):
+def ocr_url(url: str):
     req = requests.get(url)
 
-    image_orig = load_image(io.BytesIO(req.content))
+    file = io.BytesIO(req.content)
+
+    image_orig = load_image(file)
+
+    file.close()
 
     text = text_from_array(image_orig)
 
