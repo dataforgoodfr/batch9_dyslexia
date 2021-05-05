@@ -7,7 +7,7 @@ from dyslexia.io import load_image
 from dyslexia.ocr import extract_text_from_image
 
 
-app = FastAPI()
+app = FastAPI(title="Dyslex'IA OCR API")
 
 app.add_middleware(
     CORSMiddleware,
@@ -16,7 +16,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 
 
 def text_from_array(image_orig):
