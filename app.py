@@ -1,21 +1,12 @@
 import requests
 import io
 from fastapi import FastAPI, File, UploadFile
-from fastapi.middleware.cors import CORSMiddleware
 from dyslexia import preprocessing
 from dyslexia.io import load_image
 from dyslexia.ocr import extract_text_from_image
 
 
-app = FastAPI(title="Dyslex'IA OCR API")
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+app = FastAPI()
 
 
 def text_from_array(image_orig):
@@ -29,15 +20,14 @@ def text_from_array(image_orig):
 
 
 @app.post("/ocr_file/")
-def ocr_file(file: UploadFile = File(...)):
+async def ocr_file(file: UploadFile = File(...)):
     image_orig = load_image(file.file)
-    file.file.close()
     text = text_from_array(image_orig)
     return {"text": text}
 
 
 @app.post("/ocr_url/")
-def ocr_url(url: str):
+async def ocr_url(url: str):
     req = requests.get(url)
 
     file = io.BytesIO(req.content)
