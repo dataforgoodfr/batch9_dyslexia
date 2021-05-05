@@ -31,6 +31,7 @@ def text_from_array(image_orig):
 @app.post("/ocr_file/")
 def ocr_file(file: UploadFile = File(...)):
     image_orig = load_image(file.file)
+    file.file.close()
     text = text_from_array(image_orig)
     return {"text": text}
 
