@@ -85,9 +85,9 @@ result = extract_text_from_image(image_gray)
 
 #### Run app
 ```bash
-uvicorn app:app --reload
+uvicorn app:app --port 5000
 ```
-Access swagger : http://127.0.0.1:8000/docs#/
+Access swagger : http://127.0.0.1:5000/docs#/
 #### Endpoint
 
 ##### /ocr_file/
@@ -106,16 +106,16 @@ Example query :
 
 ```bash
 curl -X 'POST' \
-  'http://127.0.0.1:8000/ocr_url/?url=https%3A%2F%2Fdata2.unhcr.org%2Fimages%2Fdocuments%2Fbig_4cda85d892a5c0b5dd63b510a9c83e9c9d06e739.jpg' \
+  'http://127.0.0.1:5000/ocr_url/?url=https%3A%2F%2Fdata2.unhcr.org%2Fimages%2Fdocuments%2Fbig_4cda85d892a5c0b5dd63b510a9c83e9c9d06e739.jpg' \
   -H 'accept: application/json' \
   -d ''
 ```
 
 ### Docker
 ```
-sudo docker build -t dyslexia .
+docker-compose build
 
-sudo docker run -p 8080:8080 dyslexia
+docker-compose up
 ```
 
 ### Eval Scripts
