@@ -11,3 +11,6 @@ from .preprocessing import remove_shadow
 
 from .find_angle import find_best_rotation_angle
 from .find_angle import compute_rotation_angle
+
+from .pipeline import pipeline
+from .pipeline import get_results
