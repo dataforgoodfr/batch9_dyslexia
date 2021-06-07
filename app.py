@@ -2,7 +2,7 @@ import requests
 import io
 from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
-from dyslexia.preprocessing import get_results
+from dyslexia.app import get_results
 
 app = FastAPI(title="OCR API")
 
@@ -22,12 +22,4 @@ async def ocr_file(file: UploadFile = File(...)):
 
 @app.post("/ocr_url/")
 async def ocr_url(url: str):
-    req = requests.get(url)
-
-    file = io.BytesIO(req.content)
-
-    res = get_results(file.file)
-
-    file.close()
-
-    return res
+    return get_results(url)
