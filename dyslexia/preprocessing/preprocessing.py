@@ -165,3 +165,33 @@ def remove_shadow(img: np.ndarray):
     result_norm = cv2.merge(result_norm_planes)
 
     return result_norm
+
+
+
+
+def alter_brightness(img, value=30):
+
+    if len(img.shape) == 3:
+        hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+        h, s, v = cv2.split(hsv)
+    else:
+        v = img
+
+    # Increase brightness
+    if value >= 0:
+        lim = 255 - value
+        v[v > lim] = 255
+        v[v <= lim] += value
+    # Reduce brightness
+    else:
+        lim = 0 - value
+        v[v < lim] = 0
+        v[v >= lim] -= -(value)
+
+    if len(img.shape) == 3:
+        final_hsv = cv2.merge((h, s, v))
+        img = cv2.cvtColor(final_hsv, cv2.COLOR_HSV2BGR)
+    else:
+        img = v
+    
+    return img

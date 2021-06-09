@@ -7,6 +7,9 @@ from dyslexia import preprocessing
 
 
 def mean_angle(deg):
+    if len(deg) == 0:
+        return 0
+
     return degrees(phase(sum(rect(1, radians(d)) for d in deg) / len(deg)))
 
 
@@ -32,20 +35,26 @@ def compute_rotation_angle(image):
     thresh = 255 - thresh
 
     # apply close to connect the white areas
-    kernel = np.ones((5, 5), np.uint8)
-    morph = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, kernel)
-    kernel = np.ones((1, 9), np.uint8)
-    morph = cv2.morphologyEx(morph, cv2.MORPH_CLOSE, kernel)
-    kernel = np.ones((9, 1), np.uint8)
-    morph = cv2.morphologyEx(morph, cv2.MORPH_CLOSE, kernel)
+    # kernel = np.ones((5, 5), np.uint8)
+    # morph = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, kernel)
+    # kernel = np.ones((1, 9), np.uint8)
+    # morph = cv2.morphologyEx(morph, cv2.MORPH_CLOSE, kernel)
+    # kernel = np.ones((9, 1), np.uint8)
+    # morph = cv2.morphologyEx(morph, cv2.MORPH_CLOSE, kernel)
 
     # Use HoughLines method to find lines
-    lines = cv2.HoughLinesP(morph,
+    lines = cv2.HoughLinesP(thresh,
                             rho=1,
                             theta=1 * np.pi / 180,
                             threshold=100,
                             minLineLength=100,
                             maxLineGap=50)
+                            
+    if lines is None:
+        return 0
+    if len(lines) == 0:
+        return 0
+
     lines = np.reshape(lines, (lines.shape[0], 4))
 
     angles = []
@@ -111,7 +120,7 @@ def find_best_rotation_angle(image: np.ndarray, threshold=1):
         return angle
 
     img_rotated = preprocessing.rotate_img(image, angle)
-    new_angle1 = compute_rotation_angle(img_rotated)
+    new_angle1 = compute_rotation_angle(img_rotated)    
 
     if abs(new_angle1 - 90) > 90 - threshold:
         return angle

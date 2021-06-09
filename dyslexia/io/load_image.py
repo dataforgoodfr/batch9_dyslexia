@@ -3,11 +3,12 @@ from pathlib import Path
 from PIL import Image, ExifTags
 import cv2
 import numpy as np
+import requests
 
 
 def crop_black_border(img):
     tmp = img.copy()
-    
+
     if len(img.shape) == 3:
         tmp = cv2.cvtColor(tmp, cv2.COLOR_BGR2GRAY)
 
@@ -60,3 +61,12 @@ def load_image(fpath: Union[str, IO, Path]):
         image = crop_black_border(image)
 
     return image
+
+
+def load_image_from_url(url: str) -> np.ndarray:
+    req = requests.get(url, stream=True)
+    img = Image.open(req.raw)
+
+    img = np.array(img)
+
+    return img
