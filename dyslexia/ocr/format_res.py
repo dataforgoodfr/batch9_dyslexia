@@ -11,7 +11,7 @@ def format_pytesseract_dict_results(ocr_res: dict) -> tuple:
     -------
     tuple(list):
         paragraphs: list of strings of paragraphs detected
-        bboxes: list for (x1,y1,x2,y2) for each paragraphs
+        bboxes: list for (x1,y1,w,h) for each paragraphs
         
     """
     paragraphs = []
@@ -57,6 +57,8 @@ def format_pytesseract_dict_results(ocr_res: dict) -> tuple:
             continue
 
         paragraphs.append(res)
-        bboxes.append((x1,y1,x2,y2))
+        w = x2 - x1
+        h = y2 - y1
+        bboxes.append((x1,y1,w,h))
 
     return paragraphs, bboxes

@@ -17,7 +17,8 @@ app.add_middleware(
 
 @app.post("/ocr_file/")
 async def ocr_file(file: UploadFile = File(...)):
-    return get_results(file.file)
+    data = await file.read()
+    return get_results(data)
 
 
 @app.post("/ocr_url/")

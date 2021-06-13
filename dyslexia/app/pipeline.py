@@ -5,6 +5,7 @@ from dyslexia.io import load_image, load_image_from_url
 from dyslexia.app.errors import NoTextFoundError, ImageBlurryError
 
 import numpy as np
+import cv2
 
 
 def count_nb_french_words(txt: str) -> int:
@@ -35,24 +36,24 @@ def preprocess_image(image: np.ndarray) -> np.ndarray:
     return image_fixed
 
 
-def pipeline(fpath: str) -> tuple:
+def pipeline(image_orig: np.ndarray) -> tuple:
     """Executes the pipeline function that requires a valid path
 
     If the pipeline is executed successfully then it returns
     a tuple:
     - txt that contains a list of text in differents paragraphs
-    - bboxes containing coordinates (x1, y1, x2, y2) for each paragraph
+    - bboxes containing coordinates (x1,y1,w,h) for each paragraph
 
     Parameters
     ----------
-    fpath : str
-        Valid path to an image
+    image_orig : np.ndarray
+        original image before preprocessing
 
     Returns
     -------
     tuple
         txt: list of text in differents paragraphs
-        bboxes: coordinates (x1, y1, x2, y2) for each paragraph
+        bboxes: coordinates (x1,y1,w,h) for each paragraph
 
     Raises
     ------
@@ -61,11 +62,6 @@ def pipeline(fpath: str) -> tuple:
     NoTextFoundError
         The OCR model did not found any french word inside the image
     """
-    if fpath.startswith('http'):
-        image_orig = load_image_from_url(fpath)
-    else:
-        image_orig = load_image(fpath)
-
     # Check image blurry
     is_blurry = False
     if is_blurry:
