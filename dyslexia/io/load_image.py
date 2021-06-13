@@ -70,3 +70,11 @@ def load_image_from_url(url: str) -> np.ndarray:
     img = np.array(img)
 
     return img
+
+def load_image_from_string(fpath):
+    if fpath.startswith('http'):
+        image_orig = load_image_from_url(fpath)
+    else:
+        image_orig = load_image(fpath)
+
+    return image_orig

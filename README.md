@@ -107,20 +107,20 @@ Access swagger : http://127.0.0.1:5000/docs#/
 Takes as input a file object and outputs the ocr results in the form
 
 ```json
-{"paragraphs" : ["....", "...."], "bboxes": [(0,0,100,50), (0,100,100,50)]}
+{"paragraphs" : ["....", "...."], "bboxes": [[0,0,100,50], [0,100,100,50]]}
 ```
 
-Where paragraphs is the list of differents paragraphs and bboxes the coordinates (x1,y1,x2,y2) for each paragraph
+Where paragraphs is the list of differents paragraphs and bboxes the coordinates (x1,y1,w,h) for each paragraph
 
 ##### /orc_url/
 
 Takes as input an image and outputs the ocr results in the form
 
 ```json
-{"paragraphs" : ["....", "...."], "bboxes": [(0,0,100,50), (0,100,100,50)]}
+{"paragraphs" : ["....", "...."], "bboxes": [[0,0,100,50], [0,100,100,50]]}
 ```
 
-Where paragraphs is the list of differents paragraphs and bboxes the coordinates (x1,y1,x2,y2) for each paragraph
+Where paragraphs is the list of differents paragraphs and bboxes the coordinates (x1,y1,w,h) for each paragraph
 
 Example query : 
 
