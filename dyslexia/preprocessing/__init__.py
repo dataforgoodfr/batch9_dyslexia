@@ -9,6 +9,7 @@ from .preprocessing import image_to_gray
 from .preprocessing import find_text_angle
 from .preprocessing import remove_shadow
 from .preprocessing import alter_brightness
+from .preprocessing import is_image_blurry
 
 from .find_angle import find_best_rotation_angle
 from .find_angle import compute_rotation_angle

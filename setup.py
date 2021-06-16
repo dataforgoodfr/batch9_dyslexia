@@ -18,6 +18,8 @@ setup(
     author="Dyslex'IA",
     url="https://github.com/dataforgoodfr/batch9_dyslexia",
     install_requires=REQUIRED,
+    package_data={'dyslexia': ['src/blur_detection_model.sav']},
+    include_package_data=True,
     classifiers=[
         "Intended Audience :: Developers",
         "Intended Audience :: Education",

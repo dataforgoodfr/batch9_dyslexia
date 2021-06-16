@@ -63,7 +63,7 @@ def pipeline(image_orig: np.ndarray) -> tuple:
         The OCR model did not found any french word inside the image
     """
     # Check image blurry
-    is_blurry = False
+    is_blurry = preprocessing.is_image_blurry(image_orig)
     if is_blurry:
         raise ImageBlurryError('The image sent by the user is considered to be blurry')
 
