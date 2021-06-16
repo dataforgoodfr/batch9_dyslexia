@@ -5,6 +5,7 @@ from skimage.filters import laplace
 from skimage.transform import resize
 from sklearn.svm import SVC
 import joblib
+import os.path
 
 
 def rgb2gray(rgb: np.ndarray):
@@ -151,7 +152,7 @@ def remove_shadow(img: np.ndarray):
     result_norm_planes = []
 
     for plane in rgb_planes:
-        dilated_img = cv2.dilate(plane, np.ones((9,9), np.uint8))
+        dilated_img = cv2.dilate(plane, np.ones((9, 9), np.uint8))
         bg_img = cv2.medianBlur(dilated_img, 21)
 
         diff_img = 255 - cv2.absdiff(plane, bg_img)
@@ -169,8 +170,6 @@ def remove_shadow(img: np.ndarray):
     result_norm = cv2.merge(result_norm_planes)
 
     return result_norm
-
-
 
 
 def alter_brightness(img, value=30):
@@ -197,25 +196,30 @@ def alter_brightness(img, value=30):
         img = cv2.cvtColor(final_hsv, cv2.COLOR_HSV2BGR)
     else:
         img = v
-    
-<<<<<<< HEAD
+
     return img
 
 
+def load_model_blurry():
+    par_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    model_path = os.path.join(par_dir, 'src/blur_detection_model.sav')
+
+    model = joblib.load(model_path)
+
+    return model
 
 
 def is_image_blurry(img):
     """ Classifier for blurry images """
-    model = joblib.load('C:/users/arthu/travail/dataforgood/nathan_dyslexia/batch9_dyslexia/dyslexia/preprocessing/blur_detection_model.sav')
+    model = load_model_blurry()
+
     img = remove_shadow(img)
-    
+
     img = image_to_gray(img, threshold=True)
     img = resize(img, (400, 600))
     edge_laplace = laplace(img, ksize=3)
-    variance_laplace= np.var(edge_laplace)
+    variance_laplace = np.var(edge_laplace)
     maximum_laplace = np.amax(edge_laplace)
-    entry = [[maximum_laplace,variance_laplace]]
-    return 1-model.predict(entry)[0]
-=======
-    return img
->>>>>>> main
+    entry = [[maximum_laplace, variance_laplace]]
+
+    return 1 - model.predict(entry)[0]
