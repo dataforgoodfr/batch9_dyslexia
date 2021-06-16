@@ -58,6 +58,7 @@ You can use `pip install -e .` if you are developing on it.
 
 | Submodules | Description |
 | ---------- | ----------- |
+| `app` | Main function such as `pipeline()` or `get_results()` |
 | `io` | Input / Outputs functions such as `load_image()` |
 | `plots` | Plots functions such as `plot_image()` |
 | `preprocessing` | Preprocessing functions such as `image_to_gray()` |
@@ -65,6 +66,8 @@ You can use `pip install -e .` if you are developing on it.
 
 
 **Using the package** 
+
+Example using dyslexia
 
 ```python
 from dyslexia import preprocessing
@@ -77,6 +80,15 @@ image_no_shadow = preprocessing.remove_shadow(image_orig)
 image_gray = preprocessing.image_to_gray(image_no_shadow, threshold=True)
 
 result = extract_text_from_image(image_gray)
+```
+
+Using the pipeline
+
+```python
+from dyslexia.app import get_results
+
+fpath = 'Exemples/SVT/IMG_20210329_123029.jpg'
+result = get_results(image_gray)
 ```
 
 =======
@@ -94,13 +106,21 @@ Access swagger : http://127.0.0.1:5000/docs#/
 
 Takes as input a file object and outputs the ocr results in the form
 
-{"text" : "...."}
+```json
+{"paragraphs" : ["....", "...."], "bboxes": [[0,0,100,50], [0,100,100,50]]}
+```
+
+Where paragraphs is the list of differents paragraphs and bboxes the coordinates (x1,y1,w,h) for each paragraph
 
 ##### /orc_url/
 
 Takes as input an image and outputs the ocr results in the form
 
-{"text" : "...."}
+```json
+{"paragraphs" : ["....", "...."], "bboxes": [[0,0,100,50], [0,100,100,50]]}
+```
+
+Where paragraphs is the list of differents paragraphs and bboxes the coordinates (x1,y1,w,h) for each paragraph
 
 Example query : 
 

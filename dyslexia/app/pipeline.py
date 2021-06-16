@@ -5,6 +5,10 @@ from dyslexia.io import load_image, load_image_from_url
 from dyslexia.app.errors import NoTextFoundError, ImageBlurryError
 
 import numpy as np
+<<<<<<< HEAD
+=======
+import cv2
+>>>>>>> main
 
 
 def count_nb_french_words(txt: str) -> int:
@@ -35,24 +39,41 @@ def preprocess_image(image: np.ndarray) -> np.ndarray:
     return image_fixed
 
 
+<<<<<<< HEAD
 def pipeline(fpath: str) -> tuple:
+=======
+def pipeline(image_orig: np.ndarray) -> tuple:
+>>>>>>> main
     """Executes the pipeline function that requires a valid path
 
     If the pipeline is executed successfully then it returns
     a tuple:
     - txt that contains a list of text in differents paragraphs
+<<<<<<< HEAD
     - bboxes containing coordinates (x1, y1, x2, y2) for each paragraph
 
     Parameters
     ----------
     fpath : str
         Valid path to an image
+=======
+    - bboxes containing coordinates (x1,y1,w,h) for each paragraph
+
+    Parameters
+    ----------
+    image_orig : np.ndarray
+        original image before preprocessing
+>>>>>>> main
 
     Returns
     -------
     tuple
         txt: list of text in differents paragraphs
+<<<<<<< HEAD
         bboxes: coordinates (x1, y1, x2, y2) for each paragraph
+=======
+        bboxes: coordinates (x1,y1,w,h) for each paragraph
+>>>>>>> main
 
     Raises
     ------
@@ -61,6 +82,7 @@ def pipeline(fpath: str) -> tuple:
     NoTextFoundError
         The OCR model did not found any french word inside the image
     """
+<<<<<<< HEAD
     if fpath.startswith('http'):
         image_orig = load_image_from_url(fpath)
     else:
@@ -68,6 +90,10 @@ def pipeline(fpath: str) -> tuple:
 
     # Check image blurry
     is_blurry = preprocessing.is_image_blurry(image_orig)
+=======
+    # Check image blurry
+    is_blurry = False
+>>>>>>> main
     if is_blurry:
         raise ImageBlurryError('The image sent by the user is considered to be blurry')
 

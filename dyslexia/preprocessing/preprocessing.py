@@ -198,6 +198,7 @@ def alter_brightness(img, value=30):
     else:
         img = v
     
+<<<<<<< HEAD
     return img
 
 
@@ -215,3 +216,6 @@ def is_image_blurry(img):
     maximum_laplace = np.amax(edge_laplace)
     entry = [[maximum_laplace,variance_laplace]]
     return 1-model.predict(entry)[0]
+=======
+    return img
+>>>>>>> main
