@@ -1,6 +1,10 @@
 import cv2
 import numpy as np
 import imutils
+from skimage.filters import laplace
+from skimage.transform import resize
+from sklearn.svm import SVC
+import joblib
 
 
 def rgb2gray(rgb: np.ndarray):
@@ -165,3 +169,49 @@ def remove_shadow(img: np.ndarray):
     result_norm = cv2.merge(result_norm_planes)
 
     return result_norm
+
+
+
+
+def alter_brightness(img, value=30):
+
+    if len(img.shape) == 3:
+        hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+        h, s, v = cv2.split(hsv)
+    else:
+        v = img
+
+    # Increase brightness
+    if value >= 0:
+        lim = 255 - value
+        v[v > lim] = 255
+        v[v <= lim] += value
+    # Reduce brightness
+    else:
+        lim = 0 - value
+        v[v < lim] = 0
+        v[v >= lim] -= -(value)
+
+    if len(img.shape) == 3:
+        final_hsv = cv2.merge((h, s, v))
+        img = cv2.cvtColor(final_hsv, cv2.COLOR_HSV2BGR)
+    else:
+        img = v
+    
+    return img
+
+
+
+
+def is_image_blurry(img):
+    """ Classifier for blurry images """
+    model = joblib.load('C:/users/arthu/travail/dataforgood/nathan_dyslexia/batch9_dyslexia/dyslexia/preprocessing/blur_detection_model.sav')
+    img = remove_shadow(img)
+    
+    img = image_to_gray(img, threshold=True)
+    img = resize(img, (400, 600))
+    edge_laplace = laplace(img, ksize=3)
+    variance_laplace= np.var(edge_laplace)
+    maximum_laplace = np.amax(edge_laplace)
+    entry = [[maximum_laplace,variance_laplace]]
+    return 1-model.predict(entry)[0]
