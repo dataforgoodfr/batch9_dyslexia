@@ -65,7 +65,8 @@ def pipeline(image_orig: np.ndarray) -> tuple:
     # Check image blurry
     is_blurry = preprocessing.is_image_blurry(image_orig)
     if is_blurry:
-        raise ImageBlurryError('The image sent by the user is considered to be blurry')
+        raise ImageBlurryError(
+            'The image sent by the user is considered to be blurry')
 
     image_prep = preprocess_image(image_orig)
 
@@ -75,6 +76,7 @@ def pipeline(image_orig: np.ndarray) -> tuple:
 
     # Nothing found
     if nb_fr_words == 0:
-        raise NoTextFoundError('The OCR model did not found any french word inside the image')
+        raise NoTextFoundError(
+            'The OCR model did not found any french word inside the image')
 
     return txt, bboxes
