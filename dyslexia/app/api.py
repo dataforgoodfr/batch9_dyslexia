@@ -38,6 +38,8 @@ def get_results(data) -> dict:
     try:
         if isinstance(data, str):
             img = load_image_from_string(data)
+        elif isinstance(data, np.ndarray):
+            img = data
         else:
             img = load_image_into_numpy_array(data)
 

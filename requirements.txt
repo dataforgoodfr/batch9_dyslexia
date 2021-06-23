@@ -11,3 +11,4 @@ python-multipart==0.0.5
 requests
 scikit-image
 scikit-learn==0.23.1
+pdf2image
