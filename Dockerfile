@@ -10,6 +10,7 @@ RUN wget -P /usr/share/tesseract-ocr/4.00/tessdata/ https://github.com/tesseract
 RUN wget -P /usr/share/tesseract-ocr/4.00/tessdata/ https://github.com/tesseract-ocr/tessdata/raw/master/eng.traineddata
 
 RUN apt-get install -y python3-pip
+RUN apt-get install -y poppler-utils
 
 COPY dyslexia /deploy/dyslexia
 COPY tests /deploy/tests

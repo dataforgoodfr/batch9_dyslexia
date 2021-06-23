@@ -4,6 +4,7 @@ from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from dyslexia.app import get_results
 from pdf2image import convert_from_bytes
+import numpy as np
 
 app = FastAPI(title="OCR API")
 
