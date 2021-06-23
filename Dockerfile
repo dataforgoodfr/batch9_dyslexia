@@ -1,6 +1,5 @@
 FROM ubuntu:18.04
-
-RUN apt-get update && apt-get install -y software-properties-common && add-apt-repository -y ppa:alex-p/tesseract-ocr
+RUN apt-get update && apt-get install -y software-properties-common && add-apt-repository -y ppa:alex-p/tesseract-ocr-devel
 RUN apt-get update && apt-get install -y tesseract-ocr && apt-get install -y libtesseract-dev
 
 RUN apt-get install -y libgl1-mesa-glx
@@ -25,5 +24,8 @@ RUN python3 -m pip install . --no-cache-dir
 
 ENV LC_ALL=C.UTF-8
 ENV LANG=C.UTF-8
+ENV TESSDATA_PREFIX=/usr/share/tesseract-ocr/4.00/tessdata/
+
+RUN tesseract --version
 
 CMD python3 -m uvicorn app:app --host 0.0.0.0 --port $PORT --workers 1
