@@ -26,10 +26,10 @@ heroku container:login
 
 Push your Docker-based app
 
-Build the Dockerfile in the current directory and push the Docker image.
+Build the Dockerfile in the current directory and push the Docker image.  <strong style="color:red;">Warning: here we push the image on the `dyslexia-ocr` app</strong>
 
 ```bash
-heroku container:push web
+heroku container:push web -a dyslexia-ocr
 ```
 
 Deploy the changes
