@@ -1,0 +1,26 @@
+Les plantes
+
+1. De quoi est composée la plante?
+
+La plante est composée:
+- d’une partie souterraine qui s’étend (parfois très loin de l’endroit où se trouve la plante en surface),
+- d’une partie en surface (tige, feuilles,graines,fruits,fleurs)
+
+2. De quoi a besoin la plante?
+2.1. Soleil
+
+Le soleil permet à la plante de récupérer de l’énergie pour se développer.
+Sans soleil, elle ne peut pas récolter de l’énergie pour survivre.
+
+2.2. Oxygène
+
+Tout comme le soleil, l’oxygène est essentiel pour la survie de la plante.
+2.3. Eau
+
+L’eau apporte des nutriments (qui sont essentiels à la plante pour
+rester en bon état).
+
+2.4. Place
+La partie souterraine de la plante peut prendre beaucoup de
+place. Si les racines ne peuvent pas aller où elles veulent, la
+croissance de la plante peut être empêchée
