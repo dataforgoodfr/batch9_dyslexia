@@ -6,6 +6,7 @@ from dyslexia.app.errors import NoTextFoundError, ImageBlurryError
 
 import numpy as np
 import cv2
+import re
 
 
 def count_nb_french_words(txt: str) -> int:
@@ -31,9 +32,25 @@ def preprocess_image(image: np.ndarray) -> np.ndarray:
 
     angle = preprocessing.find_best_rotation_angle(image_gray)
 
-    image_fixed = preprocessing.rotate_img(image_gray, angle=angle)
+    # image_fixed = preprocessing.rotate_img(image_gray, angle=angle)
+    image_fixed = preprocessing.rotate_img(image, angle=angle)
 
     return image_fixed
+
+
+def postprocess_txt(paragraphs: list) -> list:
+
+    for i, txt in enumerate(paragraphs):
+        # Apply rules
+        txt = txt.replace("’'", "'")
+
+        txt = txt.replace(' _ ', ' ')
+
+        txt = re.sub(r' +', ' ', txt).strip()
+
+        paragraphs[i] = txt
+
+    return paragraphs
 
 
 def pipeline(image_orig: np.ndarray) -> tuple:
@@ -78,5 +95,7 @@ def pipeline(image_orig: np.ndarray) -> tuple:
     if nb_fr_words == 0:
         raise NoTextFoundError(
             'The OCR model did not found any french word inside the image')
+
+    txt = postprocess_txt(txt)
 
     return txt, bboxes

@@ -4,6 +4,7 @@ from PIL import Image, ExifTags
 import cv2
 import numpy as np
 import requests
+from pdf2image import convert_from_path
 
 
 def crop_black_border(img):
@@ -71,9 +72,18 @@ def load_image_from_url(url: str) -> np.ndarray:
 
     return img
 
+def load_image_pdf(fpath: str) -> np.ndarray:
+    pdf_file = convert_from_path(fpath)[0]
+    
+    img = np.array(pdf_file)
+
+    return img
+
 def load_image_from_string(fpath):
     if fpath.startswith('http'):
         image_orig = load_image_from_url(fpath)
+    elif fpath.endswith('pdf'):
+        image_orig = load_image_pdf(fpath)
     else:
         image_orig = load_image(fpath)
 
